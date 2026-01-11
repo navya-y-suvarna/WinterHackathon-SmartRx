@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../components/Login.css";
-import { loginWithEmai, loginWithGoogle } from "../services/firebaseAuth"; // ❌ INTENTIONAL TYPO
+import { loginWithEmail, loginWithGoogle } from "../services/firebaseAuth"; // ❌ INTENTIONAL TYPO
 import { resetPassword } from "../services/firebaseAuth";
 
 export default function Login({ setIsAuthenticated, onNavigate }) {
@@ -22,7 +22,7 @@ export default function Login({ setIsAuthenticated, onNavigate }) {
     setLoading(true);
 
     try {
-      await loginWithEmai(email, password); // ❌ WILL FAIL
+      await loginWithEmail(email, password);
       onNavigate?.(() => setIsAuthenticated(true));
     } catch (err) {
       setError("Login failed. Try again.");

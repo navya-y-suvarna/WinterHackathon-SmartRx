@@ -1,0 +1,60 @@
+/* Basic reset */
+html, body, #__next {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* IMPORTANT:
+   Place your aurora image at:
+   d:\pharmm\pharmacy\my-app\public\aura.svg (we add one below)
+   The CSS below references /aura.* */
+:root {
+  --bg-dark: #071028;
+  --overlay-rgba: rgba(2,6,23,0.45);
+  --text-color: #111827;
+}
+
+/* Use layered background: overlay + aura (SVG first) + image fallbacks + gradient fallback.
+   Increased specificity and !important to avoid being overridden by other global styles. */
+html, body, #__next {
+  background-color: var(--bg-dark);
+  color: var(--text-color);
+}
+
+/* Home-page background (place aura.svg / aura.jpeg in public/) */
+.home-bg {
+  background-image:
+    linear-gradient(var(--overlay-rgba), var(--overlay-rgba)),
+    url("/aura.jpeg"),
+    url("/aura.svg"),
+    url("/aura.png"),
+    linear-gradient(135deg, #0f172a 0%, #0b1220 40%, #071028 100%);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-blend-mode: overlay;
+}
+
+/* SmartRx glass container (award-winning look) */
+.smart-rx-container {
+  background: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+/* Small utility to ensure content doesn't expand beyond viewport */
+.main-inner {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
