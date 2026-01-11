@@ -1,0 +1,82 @@
+.logout-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: saturate(120%) blur(1px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.logout-modal {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 16px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(2, 6, 23, 0.18);
+  padding: 24px;
+  animation: modal-in 160ms ease-out;
+}
+
+.logout-title {
+  margin: 0 0 8px;
+  color: #0f172a; /* slate-900 */
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.logout-text {
+  margin: 0 0 20px;
+  color: #475569; /* slate-600 */
+  font-size: 14px;
+}
+
+.logout-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-cancel {
+  background: #e2e8f0; /* slate-200 */
+  color: #0f172a; /* slate-900 */
+}
+
+.btn-cancel:hover {
+  filter: brightness(0.97);
+}
+
+.btn-danger {
+  background: #ef4444; /* red-500 */
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  filter: brightness(1.05);
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
