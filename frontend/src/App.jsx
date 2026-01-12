@@ -6,12 +6,12 @@ import Home from "./pages/Home";
 import SearchResults from "./pages/SearchResults";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Curtain from "./components/Curtain";
 import Details from "./pages/Details";
 import Assistant from "./pages/Assistant";
 import CategoriesPage from "./pages/CategoriesPage";
 import CategoryProductsPage from "./pages/CategoryProductsPage";
 import LoadingScreen from "./components/LoadingScreen";
+import Plasma from "./components/Plasma/Plasma";
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -52,40 +52,45 @@ export default function App() {
   }
 
   return (
-    <div className="w-screen min-h-screen overflow-x-hidden bg-transparent text-white">
+    <div className="w-screen min-h-screen overflow-x-hidden bg-transparent text-white relative">
+      <Plasma
+        color="#2563eb"
+        speed={0.4}
+        direction="forward"
+        opacity={0.7}
+        scale={1.2}
+      />
       {/* Full-screen loading overlay with capsule animation */}
       {appLoading && <LoadingScreen />}
 
       {isAuthenticated ? (
-        <Curtain>
-          <Routes>
-            <Route
-              path="/"
-              element={<Home onLogout={handleLogout} onNavigate={triggerLoading} />}
-            />
-            <Route
-              path="/search/:query"
-              element={<SearchResults onLogout={handleLogout} onNavigate={triggerLoading} />}
-            />
-            <Route
-              path="/details/:id"
-              element={<Details onLogout={handleLogout} />}
-            />
+        <Routes>
+          <Route
+            path="/"
+            element={<Home onLogout={handleLogout} onNavigate={triggerLoading} />}
+          />
+          <Route
+            path="/search/:query"
+            element={<SearchResults onLogout={handleLogout} onNavigate={triggerLoading} />}
+          />
+          <Route
+            path="/details/:id"
+            element={<Details onLogout={handleLogout} />}
+          />
 
-            <Route
-              path="/assistant"
-              element={<Assistant onLogout={handleLogout} onNavigate={triggerLoading} />}
-            />
+          <Route
+            path="/assistant"
+            element={<Assistant onLogout={handleLogout} onNavigate={triggerLoading} />}
+          />
 
-            {/* ✅ Category Routes */}
-            <Route path="/categories" element={<CategoriesPage />} />
-            <Route path="/category/:category" element={<CategoryProductsPage />} />
+          {/* ✅ Category Routes */}
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/category/:category" element={<CategoryProductsPage />} />
 
-            <Route path="/login" element={<Navigate to="/" replace />} />
-            <Route path="/signup" element={<Navigate to="/" replace />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Curtain>
+          <Route path="/login" element={<Navigate to="/" replace />} />
+          <Route path="/signup" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       ) : (
         <Routes>
           <Route

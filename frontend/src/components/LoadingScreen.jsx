@@ -45,7 +45,7 @@ export default function LoadingScreen() {
         bottom: 0,
         width: "100%",
         height: "100%",
-        background: "linear-gradient(135deg, #4F32AA 0%, #7B5CBF 100%)",
+        background: "rgba(2, 6, 23, 0.95)", // Deep Slate overlay
         zIndex: 2147483647,
         display: "flex",
         alignItems: "center",
@@ -53,14 +53,14 @@ export default function LoadingScreen() {
         animation: "screenFadeIn 0.5s ease-out",
       }}
     >
-      <div 
-        ref={lottieRef} 
-        style={{ 
-          width: 250, 
+      <div
+        ref={lottieRef}
+        style={{
+          width: 250,
           height: 250,
-          filter: "drop-shadow(0 0 30px rgba(255, 255, 255, 0.6))",
+          filter: "drop-shadow(0 0 40px rgba(37, 99, 235, 0.3))",
           animation: "glowPulse 1.5s ease-in-out infinite",
-        }} 
+        }}
       />
       <style>{`
         @keyframes screenFadeIn {

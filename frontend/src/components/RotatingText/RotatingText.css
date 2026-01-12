@@ -1,0 +1,29 @@
+.rotating-text-container {
+    display: inline-flex;
+    position: relative;
+    height: 1.25em;
+    vertical-align: middle;
+    width: auto;
+    min-width: 6em;
+    /* Increased to accommodate 'intelligent' */
+    text-align: center;
+    justify-content: center;
+    margin: 0 0.25rem;
+    /* Reduced for tighter feel */
+}
+
+.rotating-text-item {
+    position: absolute;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+    color: #10b981;
+    /* Emerald-500 for better visibility */
+    font-weight: 800;
+}
+
+.rotating-text-item.active {
+    opacity: 1;
+    transform: translateY(0);
+}

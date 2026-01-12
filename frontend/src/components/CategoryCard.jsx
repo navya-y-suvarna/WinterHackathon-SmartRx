@@ -2,7 +2,7 @@ import React from 'react';
 
 const CategoryCard = ({ icon: Icon, title, itemCount, color, bgColor }) => {
     return (
-        <div className={`bg-white/95 backdrop-blur-sm border-2 border-[#FEA2B6]/40 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_8px_48px_0_rgba(254,162,182,0.7)] hover:border-[#FEA2B6]/60 group`}>
+        <div className={`bg-white/95 backdrop-blur-sm border-2 border-slate-200 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_8px_48px_0_rgba(255,255,255,0.4)] hover:border-white group`}>
             <div className={`${color} w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                 <Icon className="w-7 h-7 text-white" />
             </div>

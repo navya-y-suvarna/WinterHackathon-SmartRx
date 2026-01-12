@@ -1,0 +1,14 @@
+.plasma-container {
+    position: fixed;
+    /* Fixed to cover whole viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+    /* Keep it at the back */
+    pointer-events: none;
+    background: #020617;
+    /* Fallback/Base Color */
+}

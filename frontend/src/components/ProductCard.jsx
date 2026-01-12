@@ -6,7 +6,7 @@ const ProductCard = ({ product }) => {
     const [showAutoRefill, setShowAutoRefill] = useState(false);
 
     return (
-        <div className="bg-white/95 backdrop-blur-sm border-2 border-[#FB8A4B]/40 rounded-2xl shadow-[0_8px_32px_0_rgba(251,138,75,0.4)] overflow-hidden transition-all duration-300 hover:shadow-[0_8px_48px_0_rgba(251,138,75,0.7)] hover:border-[#FB8A4B]/60 hover:-translate-y-2 group">
+        <div className="bg-white/95 backdrop-blur-sm border-2 border-slate-200 rounded-2xl shadow-sm overflow-hidden transition-all duration-300 hover:shadow-[0_8px_48px_0_rgba(255,255,255,0.4)] hover:border-white hover:-translate-y-2 group">
             <div className="relative">
                 <div className="bg-gradient-to-br from-[#4D2FB2]/20 to-[#B153D7]/20 h-48 flex items-center justify-center">
                     <Pill className="w-20 h-20 text-[#4D2FB2]" />
@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
                     </div>
                 )}
                 {product.trending && (
-                    <div className="absolute top-3 left-3 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center space-x-1">
+                    <div className="absolute top-3 left-3 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center space-x-1">
                         <TrendingUp className="w-3 h-3" />
                         <span>Trending</span>
                     </div>
@@ -44,7 +44,7 @@ const ProductCard = ({ product }) => {
                 {/* Pricing */}
                 <div className="mb-4">
                     <div className="flex items-baseline space-x-2 mb-2">
-                        <span className="text-2xl font-bold text-[#4D2FB2]">₹{product.price}</span>
+                        <span className="text-2xl font-bold text-blue-600">₹{product.price}</span>
                         {product.originalPrice && (
                             <span className="text-sm text-gray-400 line-through">₹{product.originalPrice}</span>
                         )}
@@ -118,7 +118,7 @@ const ProductCard = ({ product }) => {
 
                 {/* Action Buttons */}
                 <div className="space-y-2">
-                    <button className="w-full bg-[#FB8A4B] text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 hover:bg-[#FB8A4B]/90 transition-all flex items-center justify-center space-x-2">
+                    <button className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 hover:bg-blue-700 transition-all flex items-center justify-center space-x-2">
                         <ShoppingCart className="w-5 h-5" />
                         <span>Add to Cart</span>
                     </button>
@@ -127,7 +127,7 @@ const ProductCard = ({ product }) => {
                         <>
                             <button
                                 onClick={() => setShowAutoRefill(!showAutoRefill)}
-                                className="w-full bg-[#66B668] text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 hover:bg-[#66B668]/90 transition-all flex items-center justify-center space-x-2"
+                                className="w-full bg-emerald-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 hover:bg-emerald-700 transition-all flex items-center justify-center space-x-2"
                             >
                                 <RefreshCw className="w-5 h-5" />
                                 <span>Setup Auto-Refill</span>
@@ -191,7 +191,7 @@ const ProductCard = ({ product }) => {
                         </>
                     )}
 
-                    <button className="w-full border-2 border-[#FEA2B6] text-[#FEA2B6] py-3 rounded-xl font-semibold hover:bg-[#FEA2B6]/10 hover:shadow-md transition-all flex items-center justify-center space-x-2">
+                    <button className="w-full border-2 border-blue-600 text-blue-600 py-3 rounded-xl font-semibold hover:bg-blue-50 hover:shadow-md transition-all flex items-center justify-center space-x-2">
                         <BarChart3 className="w-5 h-5" />
                         <span>View Details</span>
                     </button>

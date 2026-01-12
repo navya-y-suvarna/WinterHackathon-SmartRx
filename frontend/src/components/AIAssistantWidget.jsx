@@ -17,16 +17,16 @@ const AIAssistantWidget = () => {
 
     const handleSend = async (customMessage = null) => {
         const msgText = typeof customMessage === 'string' ? customMessage : message;
-        
+
         if (!msgText || !msgText.trim()) return;
 
         const userMsg = { type: 'user', text: msgText };
         setChatHistory(prev => [...prev, userMsg]);
-        
+
         if (typeof customMessage !== 'string') {
             setMessage('');
         }
-        
+
         setLoading(true);
 
         try {
@@ -36,7 +36,7 @@ const AIAssistantWidget = () => {
             // Actually, to be consistent, let's just use the chat endpoint for everything 
             // because I updated the backend chat endpoint to handle intents!
             // Wait, I kept /quick-action in backend too. Use it for specific buttons if desired.
-            
+
             // Let's use the standard chat endpoint which now supports intents + history
             const res = await fetch('http://localhost:5000/api/ai/chat', {
                 method: 'POST',
@@ -52,7 +52,7 @@ const AIAssistantWidget = () => {
 
             if (!res.ok) throw new Error(`Server returned ${res.status}`);
             const data = await res.json();
-            
+
             setChatHistory(prev => [...prev, { type: 'bot', text: data.reply }]);
         } catch (error) {
             console.error("Chat error:", error);
@@ -67,7 +67,7 @@ const AIAssistantWidget = () => {
         // OR call the specific quick-action endpoint.
         // The backend intent logic handles "Find medicines" but maybe not perfectly matching the string.
         // Let's use the dedicated quick-action endpoint for these buttons for instant mock response.
-        
+
         const userMsg = { type: 'user', text: action };
         setChatHistory(prev => [...prev, userMsg]);
         setLoading(true);
@@ -81,7 +81,7 @@ const AIAssistantWidget = () => {
 
             if (!res.ok) throw new Error(`Server returned ${res.status}`);
             const data = await res.json();
-            
+
             setChatHistory(prev => [...prev, { type: 'bot', text: data.reply }]);
         } catch (error) {
             console.error("Quick action error:", error);
@@ -97,13 +97,13 @@ const AIAssistantWidget = () => {
 
     return (
         <div className={`${isMaximized ? 'fixed inset-0 z-[9999] p-4 md:p-8 bg-black/40 backdrop-blur-sm flex items-center justify-center' : 'w-full'}`}>
-            <div className={`bg-gradient-to-br from-[#0E21A0] to-[#B153D7] shadow-2xl overflow-hidden flex flex-col transition-all duration-500 ease-in-out ${isMaximized ? 'w-full h-full max-w-6xl max-h-[90vh] rounded-3xl' : 'h-[500px] rounded-2xl'
+            <div className={`bg-gradient-to-br from-blue-700 to-emerald-600 shadow-2xl overflow-hidden flex flex-col transition-all duration-500 ease-in-out ${isMaximized ? 'w-full h-full max-w-6xl max-h-[90vh] rounded-3xl' : 'h-[500px] rounded-2xl'
                 }`}>
                 {/* Header */}
                 <div className="bg-white/10 backdrop-blur-sm px-6 py-5 flex items-center justify-between flex-shrink-0 border-b border-white/10">
                     <div className="flex items-center space-x-3">
                         <div className="bg-white p-2.5 rounded-2xl shadow-lg">
-                            <MessageSquare className="w-6 h-6 text-[#4D2FB2]" />
+                            <MessageSquare className="w-6 h-6 text-blue-700" />
                         </div>
                         <div>
                             <h3 className="text-white font-bold text-lg">AI Health Assistant</h3>
@@ -120,29 +120,29 @@ const AIAssistantWidget = () => {
                     </div>
                 </div>
 
-                <div className="bg-white/95 backdrop-blur-sm border-2 border-[#F329A3]/40 p-6 md:p-8 flex-1 flex flex-col overflow-hidden m-1.5 rounded-b-3xl">
-                    <div className="flex-1 overflow-y-auto mb-6 space-y-6 pr-2 scrollbar-thin scrollbar-thumb-[#B153D7]/20 scrollbar-track-transparent">
+                <div className="bg-white/95 backdrop-blur-sm border-2 border-blue-500/20 p-6 md:p-8 flex-1 flex flex-col overflow-hidden m-1.5 rounded-b-3xl">
+                    <div className="flex-1 overflow-y-auto mb-6 space-y-6 pr-2 scrollbar-thin scrollbar-thumb-blue-500/20 scrollbar-track-transparent">
                         {chatHistory.map((msg, idx) => (
                             <div key={idx} className={`flex items-start space-x-4 ${msg.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
                                 {msg.type === 'bot' && (
-                                    <div className="bg-[#F375C2]/10 p-2.5 rounded-2xl flex-shrink-0 shadow-sm border border-[#B153D7]/20">
-                                        <MessageSquare className="w-5 h-5 text-[#B153D7]" />
+                                    <div className="bg-blue-50 p-2.5 rounded-2xl flex-shrink-0 shadow-sm border border-blue-100">
+                                        <MessageSquare className="w-5 h-5 text-blue-600" />
                                     </div>
                                 )}
                                 <div className={`${msg.type === 'user'
-                                        ? 'bg-[#4D2FB2] text-white rounded-tr-none shadow-lg shadow-[#4D2FB2]/20'
-                                        : 'bg-slate-50 text-gray-800 rounded-tl-none border border-slate-100 shadow-sm'
+                                    ? 'bg-blue-700 text-white rounded-tr-none shadow-lg shadow-blue-700/20'
+                                    : 'bg-emerald-50 text-gray-800 rounded-tl-none border border-emerald-100 shadow-sm'
                                     } rounded-3xl p-4 md:p-5 max-w-[85%] text-[15px] leading-relaxed`}>
                                     <p className="whitespace-pre-wrap">{msg.text}</p>
                                 </div>
                             </div>
                         ))}
                         {loading && (
-                            <div className="flex items-center space-x-3 text-[#B153D7] text-sm ml-16 font-semibold animate-pulse">
+                            <div className="flex items-center space-x-3 text-blue-600 text-sm ml-16 font-semibold animate-pulse">
                                 <div className="flex space-x-1">
-                                    <div className="w-1.5 h-1.5 bg-[#B153D7] rounded-full animate-bounce"></div>
-                                    <div className="w-1.5 h-1.5 bg-[#B153D7] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                                    <div className="w-1.5 h-1.5 bg-[#B153D7] rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                                    <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce"></div>
+                                    <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                                    <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                                 </div>
                                 <span className="uppercase tracking-widest text-xs">Consulting Data...</span>
                             </div>
@@ -152,23 +152,23 @@ const AIAssistantWidget = () => {
 
                     {isMaximized && (
                         <div className="flex flex-wrap gap-3 mb-8 justify-center animate-in fade-in slide-in-from-bottom-2 duration-700">
-                            <button 
-                                onClick={() => handleQuickAction("Find medicines")} 
-                                className="flex items-center space-x-2 bg-white border-2 border-[#B153D7]/30 text-[#4D2FB2] px-6 py-3 rounded-2xl text-sm font-bold hover:bg-[#F375C2]/10 hover:border-[#B153D7] hover:scale-105 transition-all shadow-sm"
+                            <button
+                                onClick={() => handleQuickAction("Find medicines")}
+                                className="flex items-center space-x-2 bg-white border-2 border-blue-200 text-blue-700 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-blue-50 hover:border-blue-500 hover:scale-105 transition-all shadow-sm"
                             >
                                 <Pill className="w-5 h-5" />
                                 <span>Find medicines</span>
                             </button>
-                            <button 
-                                onClick={() => handleQuickAction("Check interactions")} 
-                                className="flex items-center space-x-2 bg-white border-2 border-[#F375C2]/30 text-[#F375C2] px-6 py-3 rounded-2xl text-sm font-bold hover:bg-[#F375C2]/10 hover:border-[#F375C2] hover:scale-105 transition-all shadow-sm"
+                            <button
+                                onClick={() => handleQuickAction("Check interactions")}
+                                className="flex items-center space-x-2 bg-white border-2 border-green-200 text-green-700 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-green-50 hover:border-green-500 hover:scale-105 transition-all shadow-sm"
                             >
                                 <Activity className="w-5 h-5" />
                                 <span>Check interactions</span>
                             </button>
-                            <button 
-                                onClick={() => handleQuickAction("Near pharmacies")} 
-                                className="flex items-center space-x-2 bg-white border-2 border-[#0E21A0]/30 text-[#0E21A0] px-6 py-3 rounded-2xl text-sm font-bold hover:bg-[#0E21A0]/10 hover:border-[#0E21A0] hover:scale-105 transition-all shadow-sm"
+                            <button
+                                onClick={() => handleQuickAction("Near pharmacies")}
+                                className="flex items-center space-x-2 bg-white border-2 border-emerald-200 text-emerald-700 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-emerald-50 hover:border-emerald-500 hover:scale-105 transition-all shadow-sm"
                             >
                                 <MapPin className="w-5 h-5" />
                                 <span>Near pharmacies</span>
@@ -184,13 +184,13 @@ const AIAssistantWidget = () => {
                                 onChange={(e) => setMessage(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                                 placeholder="Type your clinical query or medicine name..."
-                                className="w-full px-6 py-4.5 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:outline-none focus:border-[#B153D7] focus:bg-white transition-all text-slate-900 shadow-inner group-hover:border-slate-300"
+                                className="w-full px-6 py-4.5 bg-slate-50 border-2 border-slate-200 rounded-2xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all text-slate-900 shadow-inner group-hover:border-slate-300"
                             />
                         </div>
                         <button
                             onClick={() => handleSend()}
                             disabled={loading || !message.trim()}
-                            className="bg-gradient-to-r from-[#4D2FB2] to-[#B153D7] text-white p-4.5 rounded-2xl hover:shadow-xl hover:scale-105 transition-all disabled:opacity-30 cursor-pointer shadow-[#B153D7]/20 active:scale-95"
+                            className="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-4.5 rounded-2xl hover:shadow-xl hover:scale-105 transition-all disabled:opacity-30 cursor-pointer shadow-blue-500/20 active:scale-95"
                         >
                             <Send className="w-6 h-6" />
                         </button>
