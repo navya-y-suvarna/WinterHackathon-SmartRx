@@ -45,7 +45,7 @@ export default function Assistant({ onLogout, onNavigate }) {
     }
   };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMsg = { role: "user", text: input.trim(), time: now() };
@@ -57,12 +57,39 @@ export default function Assistant({ onLogout, onNavigate }) {
     // Show typing indicator
     setIsTyping(true);
 
-    // Simulate bot response delay then stream text
-    const botText =
-      "Thanks for sharing. Based on your symptoms, here's some general guidance. If symptoms persist or worsen, please consult a doctor.";
-    setTimeout(() => {
-      streamBotResponse(botText);
-    }, 700);
+    try {
+      // Determine if this looks like a prescription request or just general chat
+      // For now, simple keywords, but ideally we'd have a UI toggle
+      const isPrescriptionRelated = input.toLowerCase().includes("symptom") || 
+                                    input.toLowerCase().includes("pain") || 
+                                    input.toLowerCase().includes("feel") ||
+                                    input.toLowerCase().includes("bad");
+
+      let response;
+      if (isPrescriptionRelated) {
+           response = await fetch("http://localhost:5000/prescription", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ symptoms: input.trim(), history: "" })
+           });
+      } else {
+           response = await fetch("http://localhost:5000/api/ai/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: input.trim() }),
+          });
+      }
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      streamBotResponse(data.reply);
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+      streamBotResponse("Sorry, I'm having trouble connecting to the server. Please check your connection.");
+    }
   };
 
   const streamBotResponse = (fullText) => {
@@ -146,9 +173,9 @@ export default function Assistant({ onLogout, onNavigate }) {
         }
       `}</style>
 
-      <div className="h-screen flex bg-gray-900 text-white">
-        {/* SIDEBAR */}
-        <div className="w-72 bg-gray-800 border-r border-gray-700 flex flex-col">
+      <div className="h-screen flex bg-gray-900 text-white flex-col md:flex-row">
+        {/* SIDEBAR - hidden on small screens */}
+        <div className="hidden md:flex w-72 bg-gray-800 border-r border-gray-700 flex-col">
 
           {/* Conversation list */}
           <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2">
@@ -183,7 +210,7 @@ export default function Assistant({ onLogout, onNavigate }) {
         </div>
 
         {/* CHAT AREA */}
-        <div className="flex-1 flex flex-col bg-gray-900 relative items-center">
+        <div className="flex-1 flex flex-col bg-gray-900 relative items-center w-full">
           {/* Slim Header: bot name + status */}
           <div className="w-full max-w-3xl bg-gray-800 border-b-2 border-gray-700 px-6 py-3">
             <div className="flex items-center gap-3">

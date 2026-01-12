@@ -7,17 +7,37 @@ const AIAssistantWidget = () => {
         { type: 'bot', text: "👋 Hello! I'm your SmartRx AI assistant. How can I help you today?" }
     ]);
     const [loading, setLoading] = useState(false);
-    const [isMaximized, setIsMaximized] = useState(true); // Maximized by default as requested
+    const [isMaximized, setIsMaximized] = useState(true);
 
-    const handleSend = async () => {
-        if (!message.trim()) return;
+    const messagesEndRef = React.useRef(null);
 
-        const userMsg = { type: 'user', text: message };
+    React.useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [chatHistory]);
+
+    const handleSend = async (customMessage = null) => {
+        const msgText = typeof customMessage === 'string' ? customMessage : message;
+        
+        if (!msgText || !msgText.trim()) return;
+
+        const userMsg = { type: 'user', text: msgText };
         setChatHistory(prev => [...prev, userMsg]);
-        setMessage('');
+        
+        if (typeof customMessage !== 'string') {
+            setMessage('');
+        }
+        
         setLoading(true);
 
         try {
+            // Check if this is a quick action first (if we want to route that way)
+            // But since I have a separate handleQuickAction calling a separate endpoint, 
+            // I'll stick to the standard chat endpoint here unless it matches specific strings.
+            // Actually, to be consistent, let's just use the chat endpoint for everything 
+            // because I updated the backend chat endpoint to handle intents!
+            // Wait, I kept /quick-action in backend too. Use it for specific buttons if desired.
+            
+            // Let's use the standard chat endpoint which now supports intents + history
             const res = await fetch('http://localhost:5000/api/ai/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -29,11 +49,43 @@ const AIAssistantWidget = () => {
                     }))
                 })
             });
+
+            if (!res.ok) throw new Error(`Server returned ${res.status}`);
             const data = await res.json();
+            
             setChatHistory(prev => [...prev, { type: 'bot', text: data.reply }]);
         } catch (error) {
             console.error("Chat error:", error);
-            setChatHistory(prev => [...prev, { type: 'bot', text: "Sorry, I'm having trouble connecting to the server." }]);
+            setChatHistory(prev => [...prev, { type: 'bot', text: "Sorry, I'm having trouble connecting to the server. Check if backend is running." }]);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleQuickAction = async (action) => {
+        // We can either call handleSend(action) and let backend intent logic handle it,
+        // OR call the specific quick-action endpoint.
+        // The backend intent logic handles "Find medicines" but maybe not perfectly matching the string.
+        // Let's use the dedicated quick-action endpoint for these buttons for instant mock response.
+        
+        const userMsg = { type: 'user', text: action };
+        setChatHistory(prev => [...prev, userMsg]);
+        setLoading(true);
+
+        try {
+            const res = await fetch('http://localhost:5000/api/ai/quick-action', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action })
+            });
+
+            if (!res.ok) throw new Error(`Server returned ${res.status}`);
+            const data = await res.json();
+            
+            setChatHistory(prev => [...prev, { type: 'bot', text: data.reply }]);
+        } catch (error) {
+            console.error("Quick action error:", error);
+            handleSend(action); // Fallback to normal chat
         } finally {
             setLoading(false);
         }
@@ -95,19 +147,29 @@ const AIAssistantWidget = () => {
                                 <span className="uppercase tracking-widest text-xs">Consulting Data...</span>
                             </div>
                         )}
+                        <div ref={messagesEndRef} />
                     </div>
 
                     {isMaximized && (
                         <div className="flex flex-wrap gap-3 mb-8 justify-center animate-in fade-in slide-in-from-bottom-2 duration-700">
-                            <button onClick={() => setMessage("Find medicines")} className="flex items-center space-x-2 bg-white border-2 border-teal-100 text-teal-700 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-teal-50 hover:border-teal-300 hover:scale-105 transition-all shadow-sm">
+                            <button 
+                                onClick={() => handleQuickAction("Find medicines")} 
+                                className="flex items-center space-x-2 bg-white border-2 border-teal-100 text-teal-700 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-teal-50 hover:border-teal-300 hover:scale-105 transition-all shadow-sm"
+                            >
                                 <Pill className="w-5 h-5" />
                                 <span>Find medicines</span>
                             </button>
-                            <button onClick={() => setMessage("Check interactions")} className="flex items-center space-x-2 bg-white border-2 border-emerald-100 text-emerald-700 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-emerald-50 hover:border-emerald-300 hover:scale-105 transition-all shadow-sm">
+                            <button 
+                                onClick={() => handleQuickAction("Check interactions")} 
+                                className="flex items-center space-x-2 bg-white border-2 border-emerald-100 text-emerald-700 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-emerald-50 hover:border-emerald-300 hover:scale-105 transition-all shadow-sm"
+                            >
                                 <Activity className="w-5 h-5" />
                                 <span>Check interactions</span>
                             </button>
-                            <button onClick={() => setMessage("Near pharmacies")} className="flex items-center space-x-2 bg-white border-2 border-blue-100 text-blue-700 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-blue-50 hover:border-blue-300 hover:scale-105 transition-all shadow-sm">
+                            <button 
+                                onClick={() => handleQuickAction("Near pharmacies")} 
+                                className="flex items-center space-x-2 bg-white border-2 border-blue-100 text-blue-700 px-6 py-3 rounded-2xl text-sm font-bold hover:bg-blue-50 hover:border-blue-300 hover:scale-105 transition-all shadow-sm"
+                            >
                                 <MapPin className="w-5 h-5" />
                                 <span>Near pharmacies</span>
                             </button>
@@ -126,7 +188,7 @@ const AIAssistantWidget = () => {
                             />
                         </div>
                         <button
-                            onClick={handleSend}
+                            onClick={() => handleSend()}
                             disabled={loading || !message.trim()}
                             className="bg-gradient-to-r from-teal-600 to-emerald-600 text-white p-4.5 rounded-2xl hover:shadow-xl hover:scale-105 transition-all disabled:opacity-30 cursor-pointer shadow-teal-500/20 active:scale-95"
                         >
