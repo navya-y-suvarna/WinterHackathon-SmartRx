@@ -42,13 +42,39 @@ router.get("/search", async (req, res) => {
             $or: [
                 { name: queryRegex },
                 { manufacturer: queryRegex },
-                { tags: queryRegex }
+                { tags: queryRegex },
+                { category: queryRegex } // Search by category name too
             ]
         }).limit(50);
 
         res.json(products);
     } catch (error) {
         console.error("Search Error:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+// GET /api/products/categories
+router.get("/categories", async (req, res) => {
+    try {
+        const categories = await Product.distinct("category");
+        res.json(categories.filter(Boolean).sort());
+    } catch (error) {
+        console.error("Categories Error:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+// GET /api/products/category/:category
+router.get("/category/:category", async (req, res) => {
+    try {
+        const { category } = req.params;
+        // Case insensitive match
+        const regex = new RegExp(`^${category}$`, 'i');
+        const products = await Product.find({ category: regex });
+        res.json(products);
+    } catch (error) {
+        console.error("Category Error:", error);
         res.status(500).json({ error: "Server error" });
     }
 });
@@ -91,24 +117,16 @@ router.post("/seed-csv", async (req, res) => {
         const products = [];
         const seenNames = new Set();
 
-        // Limit to 2000 to be safe
         const limit = Math.min(lines.length, 2000);
 
         for (let i = 1; i < limit; i++) {
             const line = lines[i];
             if (!line || !line.trim()) continue;
 
-            // Simple split handling quoted values imperfectly but sufficient for this dataset
-            // Splitting by comma OUTSIDE of quotes
             const cols = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-
-            // Fallback
             const simpleCols = line.split(",");
-
-            // Use simple split if match failed (though match is better)
             const row = cols && cols.length >= headers.length ? cols : simpleCols;
 
-            // Getting values safely
             const getName = (idx) => {
                 if (!row[idx]) return "";
                 return row[idx].replace(/^"|"$/g, '').trim();
@@ -132,13 +150,14 @@ router.post("/seed-csv", async (req, res) => {
 
             products.push({
                 name: name,
+                category: category,
                 manufacturer: manufacturer,
                 packaging: `${form} ${strength}`,
                 price: price,
                 originalPrice: Math.floor(price * (1 + (discount / 100))),
                 rating: parseFloat(rating.toFixed(1)),
                 inStock: true,
-                stockCount: 100 + Math.floor(Math.random() * 500), // Random stock
+                stockCount: 100 + Math.floor(Math.random() * 500),
                 delivery: '24-48 hrs',
                 minOrder: '1 unit',
                 discount: discount,
@@ -151,7 +170,7 @@ router.post("/seed-csv", async (req, res) => {
         if (products.length > 0) {
             await Product.deleteMany({});
             await Product.insertMany(products);
-            res.json({ message: `Database seeded with ${products.length} products from CSV!` });
+            res.json({ message: `Database seeded with ${products.length} products from CSV details (including categories)!` });
         } else {
             res.status(400).json({ error: "No valid products found in CSV to seed." });
         }

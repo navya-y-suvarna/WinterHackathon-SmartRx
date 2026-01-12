@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 // Import logic functions
-const { predictRefill } = require("../../logic/predictRefill");
-const { personalizeUser } = require("../../logic/personalizeUser");
+const { predictRefill } = require("../logic/predictRefill");
+const { personalizeUser } = require("../logic/personalizeUser");
 
 // Mock data for demonstration purposes (since we might not have a full DB populated yet)
 const MOCK_ORDERS = [
