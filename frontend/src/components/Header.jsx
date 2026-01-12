@@ -1,8 +1,11 @@
 import React from 'react';
-import { FileText, ShoppingCart, LogOut } from 'lucide-react';
+import { FileText, ShoppingCart, LogOut, Home } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo2.png';
 
 const Header = ({ onLogout }) => {
+  const navigate = useNavigate();
+  
   return (
     <header className="bg-transparent text-white px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -14,6 +17,13 @@ const Header = ({ onLogout }) => {
           </div>
         </div>
         <div className="flex items-center space-x-4">
+          <button 
+            className="hover:bg-white/10 p-2 rounded-lg transition-colors" 
+            onClick={() => navigate('/')} 
+            title="Home"
+          >
+            <Home className="w-5 h-5" />
+          </button>
           <button className="hover:bg-white/10 p-2 rounded-lg transition-colors" onClick={onLogout} title="Logout">
             <LogOut className="w-5 h-5" />
           </button>

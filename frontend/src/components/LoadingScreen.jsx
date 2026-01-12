@@ -43,16 +43,41 @@ export default function LoadingScreen() {
         left: 0,
         right: 0,
         bottom: 0,
-        width: "100vw",
-        height: "100vh",
-        background: "#ffffff",
+        width: "100%",
+        height: "100%",
+        background: "linear-gradient(135deg, #4F32AA 0%, #7B5CBF 100%)",
         zIndex: 2147483647,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        animation: "screenFadeIn 0.5s ease-out",
       }}
     >
-      <div ref={lottieRef} style={{ width: 200, height: 200 }} />
+      <div 
+        ref={lottieRef} 
+        style={{ 
+          width: 250, 
+          height: 250,
+          filter: "drop-shadow(0 0 30px rgba(255, 255, 255, 0.6))",
+          animation: "glowPulse 1.5s ease-in-out infinite",
+        }} 
+      />
+      <style>{`
+        @keyframes screenFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes glowPulse {
+          0%, 100% { 
+            transform: scale(1);
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4)); 
+          }
+          50% { 
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.8)); 
+          }
+        }
+      `}</style>
     </div>,
     document.body
   );

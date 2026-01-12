@@ -7,7 +7,7 @@ const AIAssistantWidget = () => {
         { type: 'bot', text: "👋 Hello! I'm your SmartRx AI assistant. How can I help you today?" }
     ]);
     const [loading, setLoading] = useState(false);
-    const [isMaximized, setIsMaximized] = useState(true);
+    const [isMaximized, setIsMaximized] = useState(false);
 
     const messagesEndRef = React.useRef(null);
 

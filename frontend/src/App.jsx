@@ -28,14 +28,6 @@ export default function App() {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      setAppLoading(true);
-      const t = setTimeout(() => setAppLoading(false), 5000);
-      return () => clearTimeout(t);
-    }
-  }, [isAuthenticated]);
-
   const triggerLoading = (callback) => {
     console.log("🎬 triggerLoading called!");
     setAppLoading(true);
@@ -43,7 +35,7 @@ export default function App() {
       console.log("🛑 triggerLoading timeout - clearing");
       setAppLoading(false);
       if (callback) callback();
-    }, 5000);
+    }, 2500);
   };
 
   const handleLogout = () => {
