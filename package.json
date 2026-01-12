@@ -1,0 +1,23 @@
+{
+  "name": "winterhackathon-smartrx",
+  "version": "1.0.0",
+  "description": "An autonomous, backend-driven pharmacy system that safely processes medicine orders, predicts refills, personalizes user insights, optimizes inventory using Operations Research, and executes actions automatically.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navya-y-suvarna/WinterHackathon-SmartRx.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/navya-y-suvarna/WinterHackathon-SmartRx/issues"
+  },
+  "homepage": "https://github.com/navya-y-suvarna/WinterHackathon-SmartRx#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
