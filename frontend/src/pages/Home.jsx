@@ -24,8 +24,8 @@ export default function Home({ onLogout, onNavigate }) {
   }, []);
 
   const goToAssistant = () => {
-    // toggle preview on the right instead of navigating
-    setShowAssistantPreview((s) => !s);
+    // navigate to assistant page
+    navigate('/assistant');
   };
 
   const pageBg = {
@@ -43,11 +43,8 @@ export default function Home({ onLogout, onNavigate }) {
 
       <main className="px-6 py-12">
         <div className="mx-auto max-w-6xl">
-          <div className="md:flex md:items-start md:gap-10">
-            <div className="md:flex-1 text-center md:text-left">
-              <div className="mx-auto max-w-4xl">
           {/* Title with rotating text */}
-          <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-8">
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-8 text-center md:text-left">
             <span>Your </span>
             <RotatingText
               texts={[
@@ -64,22 +61,23 @@ export default function Home({ onLogout, onNavigate }) {
           </h1>
 
           {/* Search bar */}
-          <div className="max-w-xl mx-auto mb-8">
+          <div className="max-w-xl mx-auto md:mx-0 mb-12">
             <SearchBar />
           </div>
 
-          {/* Doctor animation */}
-          <div className="flex justify-center mb-6">
-            <div ref={doctorAnimRef} className="w-[320px] h-[320px] md:w-[420px] md:h-[420px]" />
-          </div>
-
-                {/* Ask SmartRX button */}
-                <button
-                  onClick={goToAssistant}
-                  className="px-6 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition mt-6"
-                >
-                  Ask SmartRX
-                </button>
+          <div className="md:flex md:items-start md:gap-10">
+            <div className="md:flex-1">
+              {/* Doctor animation and button - aligned right */}
+              <div className="flex justify-end items-start">
+                <div className="flex flex-col items-center gap-4">
+                  <div ref={doctorAnimRef} className="w-[320px] h-[320px]" />
+                  <button
+                    onClick={goToAssistant}
+                    className="px-8 py-3 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition shadow-lg hover:shadow-xl"
+                  >
+                    Ask SmartRX
+                  </button>
+                </div>
               </div>
             </div>
 
