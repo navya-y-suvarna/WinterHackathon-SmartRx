@@ -10,8 +10,8 @@ const CategoriesPage = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                // Fetch from port 5002
-                const res = await fetch('http://localhost:5002/api/products/categories');
+                // Fetch from port 5000
+                const res = await fetch('http://localhost:5000/api/products/categories');
                 const data = await res.json();
                 setCategories(data);
             } catch (error) {
