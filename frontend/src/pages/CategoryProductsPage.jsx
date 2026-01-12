@@ -12,7 +12,7 @@ const CategoryProductsPage = () => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`http://localhost:5002/api/products/category/${encodeURIComponent(category)}`);
+                const res = await fetch(`http://localhost:5000/api/products/category/${encodeURIComponent(category)}`);
                 const data = await res.json();
                 setProducts(data);
             } catch (error) {
