@@ -1,0 +1,9 @@
+id,symptoms,allowed_categories,max_days,requires_doctor,message
+breathing_issue,"breathing problem,shortness of breath",,0,true,Breathing issues require urgent medical attention.
+chest_pain,"chest pain,heart pain",,0,true,Wounds may require medical examination before treatment.
+cold_cough,"cold,cough,sore throat","Antihistamine,Antiviral",5,false,Cold and cough symptoms are usually mild and self-limiting.
+diabetes_refill,"diabetes,sugar level",Antidiabetic,30,false,Ensure regular refills for chronic conditions like diabetes.
+fever,"fever,high temperature,temperature","Antipyretic,Antiviral",3,false,"Fever can usually be managed with rest, fluids, and OTC medicines."
+headache,"headache,head pain",Analgesic,2,false,Mild headaches are common and may improve with rest and hydration.
+infection,"infection,pus,swelling",Antibiotic,0,true,Antibiotics require a valid prescription from a doctor.
+wound,"wound,cut,injury",,0,true,Wounds may require medical examination before treatment.

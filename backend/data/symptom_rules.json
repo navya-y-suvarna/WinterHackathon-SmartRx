@@ -1,0 +1,66 @@
+[
+  {
+    "id": "breathing_issue",
+    "symptoms": "\"breathing problem",
+    "allowed_categories": "shortness of breath\"",
+    "max_days": "",
+    "requires_doctor": "0",
+    "message": "true"
+  },
+  {
+    "id": "chest_pain",
+    "symptoms": "\"chest pain",
+    "allowed_categories": "heart pain\"",
+    "max_days": "",
+    "requires_doctor": "0",
+    "message": "true"
+  },
+  {
+    "id": "cold_cough",
+    "symptoms": "\"cold",
+    "allowed_categories": "cough",
+    "max_days": "sore throat\"",
+    "requires_doctor": "\"Antihistamine",
+    "message": "Antiviral\""
+  },
+  {
+    "id": "diabetes_refill",
+    "symptoms": "\"diabetes",
+    "allowed_categories": "sugar level\"",
+    "max_days": "Antidiabetic",
+    "requires_doctor": "30",
+    "message": "false"
+  },
+  {
+    "id": "fever",
+    "symptoms": "\"fever",
+    "allowed_categories": "high temperature",
+    "max_days": "temperature\"",
+    "requires_doctor": "\"Antipyretic",
+    "message": "Antiviral\""
+  },
+  {
+    "id": "headache",
+    "symptoms": "\"headache",
+    "allowed_categories": "head pain\"",
+    "max_days": "Analgesic",
+    "requires_doctor": "2",
+    "message": "false"
+  },
+  {
+    "id": "infection",
+    "symptoms": "\"infection",
+    "allowed_categories": "pus",
+    "max_days": "swelling\"",
+    "requires_doctor": "Antibiotic",
+    "message": "0"
+  },
+  {
+    "id": "wound",
+    "symptoms": "\"wound",
+    "allowed_categories": "cut",
+    "max_days": "injury\"",
+    "requires_doctor": "",
+    "message": "0"
+  }
+]
