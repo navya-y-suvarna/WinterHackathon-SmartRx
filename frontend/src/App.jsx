@@ -8,7 +8,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Curtain from "./components/Curtain";
 import Details from "./pages/Details";
-import Assistant from "./pages/Assistant"; // ✅ NEW IMPORT
+import Assistant from "./pages/Assistant";
+import CategoriesPage from "./pages/CategoriesPage";
+import CategoryProductsPage from "./pages/CategoryProductsPage";
 import LoadingScreen from "./components/LoadingScreen";
 
 export default function App() {
@@ -17,10 +19,8 @@ export default function App() {
   const [appLoading, setAppLoading] = useState(false);
 
   useEffect(() => {
-    // 🔥 Firebase test (ADDED LINE)
     console.log("🔥 Firebase Auth connected:", auth);
 
-    // Check if user is logged in
     const user = localStorage.getItem("user");
     if (user) {
       setIsAuthenticated(true);
@@ -36,14 +36,13 @@ export default function App() {
     }
   }, [isAuthenticated]);
 
-  // Expose a trigger so pages can show a quick loader for 5s on actions
   const triggerLoading = (callback) => {
     console.log("🎬 triggerLoading called!");
     setAppLoading(true);
     setTimeout(() => {
       console.log("🛑 triggerLoading timeout - clearing");
       setAppLoading(false);
-      if (callback) callback(); // Execute callback after loading
+      if (callback) callback();
     }, 5000);
   };
 
@@ -62,7 +61,6 @@ export default function App() {
 
   return (
     <div className="w-screen min-h-screen overflow-x-hidden bg-white text-slate-800">
-      {/* Full-screen loading overlay with capsule animation */}
       {appLoading && <LoadingScreen />}
 
       {isAuthenticated ? (
@@ -81,12 +79,14 @@ export default function App() {
               element={<Details onLogout={handleLogout} />}
             />
 
-            {/* ✅ NEW ASSISTANT ROUTE */}
-            {/* ✅ NEW ASSISTANT ROUTE */}
             <Route
               path="/assistant"
               element={<Assistant onLogout={handleLogout} onNavigate={triggerLoading} />}
             />
+
+            {/* ✅ Category Routes */}
+            <Route path="/categories" element={<CategoriesPage />} />
+            <Route path="/category/:category" element={<CategoryProductsPage />} />
 
             <Route path="/login" element={<Navigate to="/" replace />} />
             <Route path="/signup" element={<Navigate to="/" replace />} />

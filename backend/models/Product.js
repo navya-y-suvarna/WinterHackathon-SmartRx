@@ -1,30 +1,34 @@
 const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      index: true, // For faster search
+    {
+        name: {
+            type: String,
+            required: true,
+            index: true, // For faster search
+        },
+        category: {
+            type: String,
+            index: true,
+        },
+        manufacturer: String,
+        packaging: String,
+        price: Number,
+        originalPrice: Number,
+        bulkPrice100: Number,
+        bulkPrice500: Number,
+        bulkPrice1000: Number,
+        rating: Number,
+        inStock: Boolean,
+        stockCount: Number,
+        delivery: String,
+        minOrder: String,
+        discount: Number,
+        trending: Boolean,
+        autoRefillAvailable: Boolean,
+        tags: [String], // Good for broader search matching
     },
-    manufacturer: String,
-    packaging: String,
-    price: Number,
-    originalPrice: Number,
-    bulkPrice100: Number,
-    bulkPrice500: Number,
-    bulkPrice1000: Number,
-    rating: Number,
-    inStock: Boolean,
-    stockCount: Number,
-    delivery: String,
-    minOrder: String,
-    discount: Number,
-    trending: Boolean,
-    autoRefillAvailable: Boolean,
-    tags: [String], // Good for broader search matching
-  },
-  { timestamps: true }
+    { timestamps: true }
 );
 
 // Create a text index for search
