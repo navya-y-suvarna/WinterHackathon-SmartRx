@@ -15,10 +15,39 @@ const AIAssistantWidget = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [chatHistory]);
 
+    const handleLocatePharmacy = () => {
+        if (!navigator.geolocation) {
+            setChatHistory(prev => [...prev, { type: 'bot', text: "❌ Geolocation is not supported by your browser." }]);
+            return;
+        }
+
+        setChatHistory(prev => [...prev, { type: 'bot', text: "📍 Locating nearby pharmacies..." }]);
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            const { latitude, longitude } = position.coords;
+            const url = `https://www.google.com/maps/search/pharmacies/@${latitude},${longitude},15z`;
+            window.open(url, '_blank');
+            setChatHistory(prev => [...prev, { type: 'bot', text: "✅ Opened verified nearby pharmacies in Google Maps." }]);
+        }, (error) => {
+            console.error("Error getting location:", error);
+            setChatHistory(prev => [...prev, { type: 'bot', text: "⚠️ Unable to access location. Opening general search." }]);
+            window.open("https://www.google.com/maps/search/pharmacies/", '_blank');
+        });
+    };
+
     const handleSend = async (customMessage = null) => {
         const msgText = typeof customMessage === 'string' ? customMessage : message;
 
         if (!msgText || !msgText.trim()) return;
+
+        // Intercept "Near pharmacies" intent client-side (Local Feature)
+        if (msgText.toLowerCase().includes('near pharmacies') || msgText.toLowerCase().includes('nearby pharmacy')) {
+            if (typeof customMessage !== 'string') setMessage('');
+            const userMsg = { type: 'user', text: msgText };
+            setChatHistory(prev => [...prev, userMsg]);
+            handleLocatePharmacy();
+            return;
+        }
 
         const userMsg = { type: 'user', text: msgText };
         setChatHistory(prev => [...prev, userMsg]);
@@ -28,16 +57,8 @@ const AIAssistantWidget = () => {
         }
 
         setLoading(true);
-
         try {
-            // Check if this is a quick action first (if we want to route that way)
-            // But since I have a separate handleQuickAction calling a separate endpoint, 
-            // I'll stick to the standard chat endpoint here unless it matches specific strings.
-            // Actually, to be consistent, let's just use the chat endpoint for everything 
-            // because I updated the backend chat endpoint to handle intents!
-            // Wait, I kept /quick-action in backend too. Use it for specific buttons if desired.
-
-            // Let's use the standard chat endpoint which now supports intents + history
+            // Use standard chat endpoint
             const res = await fetch('http://localhost:5000/api/ai/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -63,11 +84,6 @@ const AIAssistantWidget = () => {
     };
 
     const handleQuickAction = async (action) => {
-        // We can either call handleSend(action) and let backend intent logic handle it,
-        // OR call the specific quick-action endpoint.
-        // The backend intent logic handles "Find medicines" but maybe not perfectly matching the string.
-        // Let's use the dedicated quick-action endpoint for these buttons for instant mock response.
-
         const userMsg = { type: 'user', text: action };
         setChatHistory(prev => [...prev, userMsg]);
         setLoading(true);

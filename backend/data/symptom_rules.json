@@ -1,66 +1,38 @@
 [
   {
-    "id": "breathing_issue",
-    "symptoms": "\"breathing problem",
-    "allowed_categories": "shortness of breath\"",
-    "max_days": "",
-    "requires_doctor": "0",
-    "message": "true"
-  },
-  {
-    "id": "chest_pain",
-    "symptoms": "\"chest pain",
-    "allowed_categories": "heart pain\"",
-    "max_days": "",
-    "requires_doctor": "0",
-    "message": "true"
-  },
-  {
     "id": "cold_cough",
-    "symptoms": "\"cold",
-    "allowed_categories": "cough",
-    "max_days": "sore throat\"",
-    "requires_doctor": "\"Antihistamine",
-    "message": "Antiviral\""
+    "symptoms": "cold,cough,sore throat",
+    "allowed_categories": "Cetirizine, Cough Syrup",
+    "max_days": 5,
+    "requires_doctor": false,
+    "message": "Cold and cough symptoms are usually mild and self-limiting.",
+    "trending_month": "December-February"
   },
   {
     "id": "diabetes_refill",
-    "symptoms": "\"diabetes",
-    "allowed_categories": "sugar level\"",
-    "max_days": "Antidiabetic",
-    "requires_doctor": "30",
-    "message": "false"
+    "symptoms": "diabetes,sugar level",
+    "allowed_categories": "Metformin, Insulin",
+    "max_days": 30,
+    "requires_doctor": false,
+    "message": "Ensure regular refills for chronic conditions like diabetes.",
+    "trending_month": "All year"
   },
   {
     "id": "fever",
-    "symptoms": "\"fever",
-    "allowed_categories": "high temperature",
-    "max_days": "temperature\"",
-    "requires_doctor": "\"Antipyretic",
-    "message": "Antiviral\""
+    "symptoms": "fever,high temperature,temperature",
+    "allowed_categories": "Paracetamol, Ibuprofen",
+    "max_days": 3,
+    "requires_doctor": false,
+    "message": "Fever can usually be managed with rest, fluids, and OTC medicines.",
+    "trending_month": "July-September"
   },
   {
     "id": "headache",
-    "symptoms": "\"headache",
-    "allowed_categories": "head pain\"",
-    "max_days": "Analgesic",
-    "requires_doctor": "2",
-    "message": "false"
-  },
-  {
-    "id": "infection",
-    "symptoms": "\"infection",
-    "allowed_categories": "pus",
-    "max_days": "swelling\"",
-    "requires_doctor": "Antibiotic",
-    "message": "0"
-  },
-  {
-    "id": "wound",
-    "symptoms": "\"wound",
-    "allowed_categories": "cut",
-    "max_days": "injury\"",
-    "requires_doctor": "",
-    "message": "0"
+    "symptoms": "headache,head pain",
+    "allowed_categories": "Aspirin, Disprin",
+    "max_days": 2,
+    "requires_doctor": false,
+    "message": "Mild headaches are common and may improve with rest and hydration.",
+    "trending_month": "All year"
   }
 ]

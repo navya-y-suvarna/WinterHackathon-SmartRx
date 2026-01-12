@@ -4,6 +4,7 @@ import SearchBar from "../components/SearchBar";
 import CategoriesSection from "../components/CategoriesSection";
 import QuickActions from "../components/QuickActions";
 import AIAssistantWidget from "../components/AIAssistantWidget";
+import TrendingFeed from "../components/TrendingFeed";
 import logo from '../assets/logo2.png';
 import RotatingText from "../components/RotatingText/RotatingText";
 
@@ -36,6 +37,9 @@ export default function Home({ onLogout, loading }) {
         </div>
 
         <SearchBar />
+        <div className="mt-6 mb-8">
+          <TrendingFeed />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
