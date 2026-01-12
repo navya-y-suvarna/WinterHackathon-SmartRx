@@ -22,7 +22,7 @@ const SearchResults = ({ onLogout }) => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:5001/api/products/search?q=${encodeURIComponent(query || '')}`);
+        const res = await fetch(`http://localhost:5002/api/products/search?q=${encodeURIComponent(query || '')}`);
         const data = await res.json();
         setProducts(data);
       } catch (error) {
