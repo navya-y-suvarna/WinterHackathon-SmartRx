@@ -10,80 +10,35 @@ const SearchResults = ({ onLogout }) => {
   const [searchQuery, setSearchQuery] = useState(query || '');
 
   // Mock Data for "Paracetamol"
-  const products = [
-    {
-      name: 'Paracetamol 500mg',
-      manufacturer: 'Generic Pharma Ltd.',
-      packaging: 'Strip of 10 tablets',
-      price: 12,
-      originalPrice: 15,
-      bulkPrice100: 10.5,
-      bulkPrice500: 9.5,
-      bulkPrice1000: 8.5,
-      rating: 4.5,
-      inStock: true,
-      stockCount: 5000,
-      delivery: '24-48 hrs',
-      minOrder: '100 units',
-      discount: 20,
-      trending: true,
-      autoRefillAvailable: true
-    },
-    {
-      name: 'Paracetamol 650mg',
-      manufacturer: 'MediCure Industries',
-      packaging: 'Strip of 15 tablets',
-      price: 18,
-      originalPrice: 22,
-      bulkPrice100: 16,
-      bulkPrice500: 14.5,
-      bulkPrice1000: 13,
-      rating: 4.7,
-      inStock: true,
-      stockCount: 3200,
-      delivery: '24-48 hrs',
-      minOrder: '50 units',
-      discount: 18,
-      trending: false,
-      autoRefillAvailable: true
-    },
-    {
-      name: 'Paracetamol 500mg (Branded)',
-      manufacturer: 'HealthCare Plus',
-      packaging: 'Bottle of 100 tablets',
-      price: 95,
-      originalPrice: 120,
-      bulkPrice100: 85,
-      bulkPrice500: 78,
-      bulkPrice1000: 72,
-      rating: 4.8,
-      inStock: true,
-      stockCount: 1500,
-      delivery: '48-72 hrs',
-      minOrder: '20 units',
-      discount: 21,
-      trending: false,
-      autoRefillAvailable: true
-    },
-    {
-      name: 'Paracetamol Suspension 120mg/5ml',
-      manufacturer: 'PediCare Pharma',
-      packaging: 'Bottle of 60ml',
-      price: 45,
-      originalPrice: 55,
-      bulkPrice100: 40,
-      bulkPrice500: 37,
-      bulkPrice1000: 34,
-      rating: 4.6,
-      inStock: true,
-      stockCount: 2800,
-      delivery: '24-48 hrs',
-      minOrder: '50 units',
-      discount: 18,
-      trending: true,
-      autoRefillAvailable: true
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Update local state if URL param changes
+    setSearchQuery(query || '');
+  }, [query]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`http://localhost:5001/api/products/search?q=${encodeURIComponent(query || '')}`);
+        const data = await res.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching search results:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (query) {
+      fetchProducts();
+    } else {
+      setProducts([]);
+      setLoading(false);
     }
-  ];
+  }, [query]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-900 via-emerald-900 to-teal-950">

@@ -41,7 +41,7 @@ const SearchBar = () => {
       </div>
       <div className="mt-4 flex items-center space-x-4">
         <span className="text-sm text-gray-500">Popular:</span>
-        {['Paracetamol', 'Vitamin D', 'First Aid Kit', 'Blood Pressure'].map((item) => (
+        {['Amoxicillin', 'Pain', 'Fever', 'Diabetes'].map((item) => (
           <button
             key={item}
             onClick={() => navigate(`/search/${item}`)}
