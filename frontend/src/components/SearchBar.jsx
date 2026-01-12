@@ -19,7 +19,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+    <div className="bg-white/95 backdrop-blur-sm border-2 border-[#59B3FC]/40 rounded-2xl shadow-[0_8px_32px_0_rgba(89,179,252,0.4)] p-6 mb-6 transition-all duration-300 hover:shadow-[0_8px_48px_0_rgba(89,179,252,0.7)] hover:border-[#59B3FC]/60 hover:scale-[1.01]">
       <div className="flex items-center space-x-3">
         <div className="flex-1 relative">
           <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -29,12 +29,12 @@ const SearchBar = () => {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search medicines, health products, or ask a question..."
-            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 transition-colors text-black"
+            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#B153D7] transition-colors text-black"
           />
         </div>
         <button
           onClick={handleSearch}
-          className="bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all"
+          className="bg-[#FB8A4B] text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 hover:bg-[#FB8A4B]/90 transition-all w-24 md:w-auto"
         >
           Search
         </button>
@@ -45,7 +45,7 @@ const SearchBar = () => {
           <button
             key={item}
             onClick={() => navigate(`/search/${item}`)}
-            className="text-sm text-teal-600 hover:text-teal-700 hover:underline transition-colors"
+            className="text-sm text-[#59B3FC] hover:text-[#59B3FC]/80 hover:underline transition-colors font-medium"
           >
             {item}
           </button>

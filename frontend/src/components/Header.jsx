@@ -6,11 +6,11 @@ const Header = ({ onLogout }) => {
   return (
     <header className="bg-transparent text-white px-6 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <img src={logo} alt="SmartRx Logo" className="w-16 h-16 object-contain" />
+        <div className="flex items-center space-x-3 bg-white/5 backdrop-blur-md px-4 py-2 rounded-2xl shadow-lg border border-white/10">
+          <img src={logo} alt="SmartRx Logo" className="w-32 h-32 object-contain drop-shadow-md" />
           <div>
             <h1 className="text-2xl font-bold">SmartRx</h1>
-            <p className="text-xs text-teal-100">Your Health, Our Priority</p>
+            <p className="text-xs text-white/80">Your Health, Our Priority</p>
           </div>
         </div>
         <div className="flex items-center space-x-4">

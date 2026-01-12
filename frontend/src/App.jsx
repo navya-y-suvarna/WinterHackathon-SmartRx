@@ -61,7 +61,7 @@ export default function App() {
   }
 
   return (
-    <div className="w-screen min-h-screen overflow-x-hidden bg-white text-slate-800">
+    <div className="w-screen min-h-screen overflow-x-hidden bg-transparent text-white">
       {/* Full-screen loading overlay with capsule animation */}
       {appLoading && <LoadingScreen />}
 

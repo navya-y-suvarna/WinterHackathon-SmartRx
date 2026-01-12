@@ -65,7 +65,7 @@ const CameraScanner = ({ isOpen, onClose, onCapture }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-            <div className="relative bg-black rounded-2xl overflow-hidden w-full max-w-md mx-4 shadow-2xl border border-teal-500/30">
+            <div className="relative bg-black rounded-2xl overflow-hidden w-full max-w-md mx-4 shadow-2xl border border-[#B153D7]/30">
 
                 {/* Header */}
                 <div className="absolute top-0 left-0 right-0 z-10 p-4 flex justify-between items-center bg-gradient-to-b from-black/60 to-transparent">
@@ -85,7 +85,7 @@ const CameraScanner = ({ isOpen, onClose, onCapture }) => {
                             <p>{error}</p>
                             <button
                                 onClick={startCamera}
-                                className="mt-4 px-4 py-2 bg-teal-600 rounded-lg text-white text-sm"
+                                className="mt-4 px-4 py-2 bg-[#4D2FB2] rounded-lg text-white text-sm"
                             >
                                 Retry
                             </button>
@@ -101,15 +101,15 @@ const CameraScanner = ({ isOpen, onClose, onCapture }) => {
 
                             {/* Scanner Overlay Box */}
                             <div className="absolute inset-0 flex items-center justify-center p-8 pointer-events-none">
-                                <div className="relative w-full aspect-[3/4] max-h-[70%] border-2 border-teal-500 rounded-lg shadow-[0_0_0_1000px_rgba(0,0,0,0.5)]">
+                                <div className="relative w-full aspect-[3/4] max-h-[70%] border-2 border-[#B153D7] rounded-lg shadow-[0_0_0_1000px_rgba(0,0,0,0.5)]">
                                     {/* Corner Accents */}
-                                    <div className="absolute -top-1 -left-1 w-8 h-8 border-t-4 border-l-4 border-teal-400 rounded-tl-lg"></div>
-                                    <div className="absolute -top-1 -right-1 w-8 h-8 border-t-4 border-r-4 border-teal-400 rounded-tr-lg"></div>
-                                    <div className="absolute -bottom-1 -left-1 w-8 h-8 border-b-4 border-l-4 border-teal-400 rounded-bl-lg"></div>
-                                    <div className="absolute -bottom-1 -right-1 w-8 h-8 border-b-4 border-r-4 border-teal-400 rounded-br-lg"></div>
+                                    <div className="absolute -top-1 -left-1 w-8 h-8 border-t-4 border-l-4 border-[#B153D7] rounded-tl-lg"></div>
+                                    <div className="absolute -top-1 -right-1 w-8 h-8 border-t-4 border-r-4 border-[#B153D7] rounded-tr-lg"></div>
+                                    <div className="absolute -bottom-1 -left-1 w-8 h-8 border-b-4 border-l-4 border-[#B153D7] rounded-bl-lg"></div>
+                                    <div className="absolute -bottom-1 -right-1 w-8 h-8 border-b-4 border-r-4 border-[#B153D7] rounded-br-lg"></div>
 
                                     {/* Scanning Line Animation */}
-                                    <div className="absolute top-0 left-0 right-0 h-1 bg-teal-400/50 shadow-[0_0_15px_rgba(45,212,191,0.5)] animate-[scan_2s_ease-in-out_infinite]"></div>
+                                    <div className="absolute top-0 left-0 right-0 h-1 bg-[#B153D7]/50 shadow-[0_0_15px_rgba(177,83,215,0.5)] animate-[scan_2s_ease-in-out_infinite]"></div>
                                 </div>
                             </div>
                             <p className="absolute bottom-20 left-0 right-0 text-center text-white/80 text-sm drop-shadow-md">
@@ -128,7 +128,7 @@ const CameraScanner = ({ isOpen, onClose, onCapture }) => {
                         disabled={!!error}
                         className="group relative"
                     >
-                        <div className="absolute inset-0 bg-teal-500 rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                        <div className="absolute inset-0 bg-[#B153D7] rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
                         <div className="relative w-16 h-16 rounded-full border-4 border-white flex items-center justify-center">
                             <div className="w-12 h-12 bg-white rounded-full group-active:scale-90 transition-transform"></div>
                         </div>

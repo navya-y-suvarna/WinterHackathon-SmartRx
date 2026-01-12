@@ -62,13 +62,13 @@ const QuickActions = () => {
     };
 
     return (
-        <div className="bg-white rounded-2xl shadow-lg p-6">
+        <div className="bg-white/95 backdrop-blur-sm border-2 border-[#66B668]/40 rounded-2xl shadow-[0_8px_32px_0_rgba(102,182,104,0.4)] p-6 transition-all duration-300 hover:shadow-[0_8px_48px_0_rgba(102,182,104,0.7)] hover:border-[#66B668]/60 hover:-translate-y-1">
             <h3 className="text-gray-800 font-semibold mb-4">Quick Actions</h3>
             <button
                 onClick={() => setIsScannerOpen(true)}
-                className="w-full flex items-center space-x-3 p-4 rounded-xl hover:bg-teal-50 transition-colors group"
+                className="w-full flex items-center space-x-3 p-4 rounded-xl hover:bg-[#4D2FB2]/5 transition-colors group"
             >
-                <div className="bg-teal-500 p-2 rounded-lg group-hover:scale-110 transition-transform">
+                <div className="bg-[#FEA2B6] p-2 rounded-lg group-hover:scale-110 transition-transform shadow-md">
                     <Upload className="w-5 h-5 text-white" />
                 </div>
                 <div className="text-left">
@@ -78,9 +78,9 @@ const QuickActions = () => {
             </button>
             <button
                 onClick={handleLocatePharmacy}
-                className="w-full flex items-center space-x-3 p-4 rounded-xl hover:bg-teal-50 transition-colors group mt-2"
+                className="w-full flex items-center space-x-3 p-4 rounded-xl hover:bg-[#0E21A0]/5 transition-colors group mt-2"
             >
-                <div className="bg-emerald-500 p-2 rounded-lg group-hover:scale-110 transition-transform">
+                <div className="bg-[#66B668] p-2 rounded-lg group-hover:scale-110 transition-transform shadow-md">
                     <MapPin className="w-5 h-5 text-white" />
                 </div>
                 <div className="text-left">
