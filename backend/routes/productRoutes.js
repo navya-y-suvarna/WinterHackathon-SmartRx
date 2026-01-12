@@ -31,6 +31,7 @@ const MOCK_PRODUCTS = [
 router.get("/search", async (req, res) => {
     try {
         const { q } = req.query;
+        console.log(`🔍 Product search hit! Query: "${q}"`);
         if (!q) {
             return res.json([]);
         }

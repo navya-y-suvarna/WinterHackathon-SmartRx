@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Upload, MapPin, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import CameraScanner from './CameraScanner';
+import Tesseract from 'tesseract.js';
 
 const QuickActions = () => {
     const [isProcessing, setIsProcessing] = useState(false);
@@ -11,7 +12,6 @@ const QuickActions = () => {
     const handleCapture = async (imageData) => {
         setIsProcessing(true);
         try {
-            const Tesseract = await import('tesseract.js');
 
             // 1. Perform OCR directly on captured image (Preprocessing removed as it degraded performance)
             const result = await Tesseract.recognize(
