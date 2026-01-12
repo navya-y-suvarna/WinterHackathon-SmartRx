@@ -1,43 +1,58 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Search } from "lucide-react";
+import React, { useState } from 'react';
+import { Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-export default function SearchBar() {
-  const [q, setQ] = useState("");
+const SearchBar = () => {
+  const [query, setQuery] = useState('');
   const navigate = useNavigate();
 
-  return (
-    <div className="w-full flex justify-center mt-10">
-      <div className="relative w-[720px]">
-        {/* 🔍 Search icon */}
-        <Search className="absolute left-[26px] top-1/2 -translate-y-1/2 w-6 h-6 text-gray-500 pointer-events-none" />
+  const handleSearch = () => {
+    if (query.trim()) {
+      navigate(`/search/${encodeURIComponent(query)}`);
+    }
+  };
 
-        <input
-          type="text"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && q.trim()) {
-              navigate(`/search/${q}`);
-            }
-          }}
-          placeholder="Search medicines, symptoms, guidance..."
-          className="
-            w-full
-            h-[62px]
-            pl-[72px]          /* ✅ KEY FIX — text starts AFTER icon */
-            pr-8
-            rounded-full
-            border-2
-            text-lg
-            placeholder:text-xl
-            shadow-lg
-            outline-none
-            transition
-            focus:ring-2 focus:ring-blue-500
-          "
-        />
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+      <div className="flex items-center space-x-3">
+        <div className="flex-1 relative">
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Search medicines, health products, or ask a question..."
+            className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-teal-500 transition-colors text-black"
+          />
+        </div>
+        <button
+          onClick={handleSearch}
+          className="bg-gradient-to-r from-teal-500 to-emerald-500 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all"
+        >
+          Search
+        </button>
+      </div>
+      <div className="mt-4 flex items-center space-x-4">
+        <span className="text-sm text-gray-500">Popular:</span>
+        {['Paracetamol', 'Vitamin D', 'First Aid Kit', 'Blood Pressure'].map((item) => (
+          <button
+            key={item}
+            onClick={() => navigate(`/search/${item}`)}
+            className="text-sm text-teal-600 hover:text-teal-700 hover:underline transition-colors"
+          >
+            {item}
+          </button>
+        ))}
       </div>
     </div>
   );
-}
+};
+
+export default SearchBar;
