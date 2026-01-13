@@ -58,8 +58,9 @@ export default function LoadingScreen() {
         style={{
           width: 250,
           height: 250,
-          filter: "drop-shadow(0 0 40px rgba(37, 99, 235, 0.3))",
-          animation: "glowPulse 1.5s ease-in-out infinite",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       />
       <style>{`
@@ -67,21 +68,9 @@ export default function LoadingScreen() {
           from { opacity: 0; }
           to { opacity: 1; }
         }
-        @keyframes glowPulse {
-          0%, 100% { 
-            transform: scale(1);
-            filter: drop-shadow(0 0 20px rgba(37, 99, 235, 0.2)); 
-          }
-          50% { 
-            transform: scale(1.05);
-            filter: drop-shadow(0 0 40px rgba(16, 185, 129, 0.3)); 
-          }
-        }
       `}</style>
     </div>,
     document.body
   );
 }
-
-
 
