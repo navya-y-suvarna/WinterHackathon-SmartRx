@@ -3,8 +3,9 @@ const fs = require('fs');
 const path = require('path');
 
 // Initialize Gemini model
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Stable model for context processing
+console.log("🤖 Initializing Gemini CDSS Context... Key Present:", !!process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 /**
  * Loads JSON data to provide structured context for the AI
@@ -49,30 +50,21 @@ const chatContext = loadContext();
  */
 async function getChatResponse(userMessage, history = []) {
     try {
-        // Clean history to maintain alternating roles and remove UI initialization markers
-        const cleanedHistory = (history || []).filter(msg =>
-            msg.parts && msg.parts[0] && msg.parts[0].text && !msg.parts[0].text.includes("[Clinical Mode Active]")
-        );
+        // Simple approach - just send the message with system context
+        const prompt = `${chatContext}\n\nUser Query: ${userMessage}\n\nProvide a professional clinical response:`;
 
-        const chat = model.startChat({
-            history: [
-                {
-                    role: "user",
-                    parts: [{ text: chatContext }],
-                },
-                {
-                    role: "model",
-                    parts: [{ text: "[SYSTEM_ACK] CDSS Online. Database linked. Ready for clinical query." }],
-                },
-                ...cleanedHistory
-            ],
-        });
-
-        const result = await chat.sendMessage(userMessage);
-        return result.response.text();
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        return response.text();
     } catch (error) {
-        console.error("Gemini Chat Error:", error);
-        return "ERR: DECISION_SUPPORT_OFFLINE. Check API/Context.";
+        console.error("❌ Gemini Chat Error:", error);
+        console.error("Error name:", error.name);
+        console.error("Error message:", error.message);
+        console.error("Error status:", error.status);
+        console.error("Error details:", JSON.stringify(error, null, 2));
+
+        // Provide a helpful fallback
+        return "I apologize, but I'm currently unable to connect to the AI service. Please check:\n1. API key is valid\n2. Internet connection is active\n3. Gemini API quota is available";
     }
 }
 

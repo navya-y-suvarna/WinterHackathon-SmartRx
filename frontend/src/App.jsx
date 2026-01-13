@@ -45,8 +45,8 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="w-screen h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-blue-50">
-        <p className="text-lg text-slate-600">Loading...</p>
+      <div className="w-screen h-screen flex items-center justify-center bg-white">
+        <p className="text-lg text-slate-600 font-medium">Initializing SmartRx...</p>
       </div>
     );
   }

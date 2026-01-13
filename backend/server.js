@@ -11,11 +11,11 @@ app.use(express.json());
 
 // MongoDB Connection
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/smartrx", {
-    dbName: process.env.MONGODB_DATABASE || "smartrx",
+  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/smartrx", {
+    dbName: "smartrx",
   })
   .then(() =>
-    console.log("✅ MongoDB connected to database:", process.env.MONGODB_DATABASE)
+    console.log("✅ MongoDB connected to database: smartrx")
   )
   .catch((err) => console.log("❌ MongoDB error:", err));
 

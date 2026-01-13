@@ -45,8 +45,8 @@ export default function LoadingScreen() {
         bottom: 0,
         width: "100%",
         height: "100%",
-        background: "rgba(2, 6, 23, 0.95)", // Deep Slate overlay
-        zIndex: 2147483647,
+        background: "#FFFFFF", // Restore original white background
+        zIndex: 9999,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -70,11 +70,11 @@ export default function LoadingScreen() {
         @keyframes glowPulse {
           0%, 100% { 
             transform: scale(1);
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4)); 
+            filter: drop-shadow(0 0 20px rgba(37, 99, 235, 0.2)); 
           }
           50% { 
             transform: scale(1.05);
-            filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.8)); 
+            filter: drop-shadow(0 0 40px rgba(16, 185, 129, 0.3)); 
           }
         }
       `}</style>
